@@ -12,12 +12,12 @@ Demo (my own apartment's bot): http://telegram.me/i_am_at_home_bot
 - Connect `SHT3x-DIS` sensor to your Raspberry Pi
 - [Install Pi4J](http://pi4j.com/install.html#Installation) on your Raspberry Pi
 - Build binary, copy it to Raspberry Pi and start
-    ``
-    mvn clean install
-    scp target/raspberry-pi-meteo-bot-0.1.0.jar pi@address:~
-    ssh pi@address 'chmod +x raspberry-pi-meteo-bot-0.1.0.jar'
-    ssh pi@address 'nohup java -jar raspberry-pi-meteo-bot-0.1.0.jar &> meteo-bot.out&'
-    ``
+```
+mvn clean install
+scp target/raspberry-pi-meteo-bot-0.1.0.jar pi@address:~
+ssh pi@address 'chmod +x raspberry-pi-meteo-bot-0.1.0.jar'
+ssh pi@address 'nohup java -jar raspberry-pi-meteo-bot-0.1.0.jar &> meteo-bot.out&'
+```
 
 ## Using
 - Open your Telegram bot and call for sensor
