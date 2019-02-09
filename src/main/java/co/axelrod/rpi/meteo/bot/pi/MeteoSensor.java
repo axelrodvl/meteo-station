@@ -40,6 +40,6 @@ public class MeteoSensor {
         //double fTemp = ((((data[0] & 0xFF) * 256) + (data[1] & 0xFF)) * 315.0) / 65535.0 - 49.0;
         double humidity = ((((data[3] & 0xFF) * 256) + (data[4] & 0xFF)) * 100.0) / 65535.0;
 
-        return String.format("Температура: %.2f °C %n\nВлажность: %.2f%%RH %n", cTemp, humidity);
+        return String.format("Температура: %.2f °C %n\nВлажность: %.2f%%RH %n\n", cTemp, humidity);
     }
 }
