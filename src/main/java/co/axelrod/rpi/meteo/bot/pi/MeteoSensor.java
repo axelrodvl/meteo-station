@@ -9,12 +9,11 @@ import java.io.IOException;
 
 @Component
 public class MeteoSensor {
-    private I2CBus bus;
     private I2CDevice device;
 
     public MeteoSensor() throws IOException, I2CFactory.UnsupportedBusNumberException {
         // Create I2CBus
-        bus = I2CFactory.getInstance(I2CBus.BUS_1);
+        I2CBus bus = I2CFactory.getInstance(I2CBus.BUS_1);
 
         // Get I2C device, SHT31 I2C address is 0x44(68)
         device = bus.getDevice(0x44);
