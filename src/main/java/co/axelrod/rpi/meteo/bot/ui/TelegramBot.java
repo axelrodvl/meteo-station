@@ -33,7 +33,7 @@ public class TelegramBot extends TelegramLongPollingBot {
     private ReplyKeyboard getKeyboard() {
         ReplyKeyboardMarkup replyKeyboard = new ReplyKeyboardMarkup();
         KeyboardRow keyboardRow = new KeyboardRow();
-        keyboardRow.add("Температура и влажность");
+        keyboardRow.add("Температура, влажность и CO₂");
         replyKeyboard.setKeyboard(Collections.singletonList(keyboardRow));
         return replyKeyboard;
     }
