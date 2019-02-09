@@ -1,16 +1,14 @@
 # Telegram bot for using Raspberry Pi's sensors
 
-Control your apartment's humidity, temperature and CO2 level via Telegram bot and Raspberry Pi.
+Control your apartment's humidity and temperature via Telegram bot and Raspberry Pi.
 
 Supported sensors:
 - Humidity and temperature: `SHT3x-DIS`
-- CO2 level: `MH-Z19B NDIR`
 
 Demo (my own apartment's bot): http://telegram.me/i_am_at_home_bot
 
 ## Preparing bot
 - Create [Telegram bot](https://core.telegram.org/bots#creating-a-new-bot) and retrieve the token
-- Remove unused sensor component (if you need)
 - Set Telegram bot token
     - at application.properties
     - by passing as argument: 'java -jar build.jar --telegram.bot.token=YOUR_TOKEN'
@@ -18,7 +16,6 @@ Demo (my own apartment's bot): http://telegram.me/i_am_at_home_bot
 ## Build and run
 - [Install Pi4J](http://pi4j.com/install.html#Installation) on your Raspberry Pi
 - Connect `SHT3x-DIS` sensor to your Raspberry Pi
-- Connect `MH-Z19B NDIR` sensor to your Raspberry Pi
 - Build binary, copy it to Raspberry Pi and start
 ```
 mvn clean install

@@ -1,6 +1,5 @@
 package co.axelrod.rpi.meteo.bot.ui;
 
-import co.axelrod.rpi.meteo.bot.pi.CO2Sensor;
 import co.axelrod.rpi.meteo.bot.pi.MeteoSensor;
 import co.axelrod.rpi.meteo.bot.util.TelegramUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -27,9 +26,6 @@ public class TelegramBot extends TelegramLongPollingBot {
     @Autowired
     private MeteoSensor meteoSensor;
 
-    @Autowired
-    private CO2Sensor co2Sensor;
-
     private ReplyKeyboard getKeyboard() {
         ReplyKeyboardMarkup replyKeyboard = new ReplyKeyboardMarkup();
         KeyboardRow keyboardRow = new KeyboardRow();
@@ -46,7 +42,7 @@ public class TelegramBot extends TelegramLongPollingBot {
                 log.info("New request from Telegram bot with id: " + telegramChatId);
 
                 execute(TelegramUtil.prepareMessage(telegramChatId,
-                        meteoSensor.getTemperatureInCelsius() + co2Sensor.getCO2(),
+                        meteoSensor.getTemperatureInCelsius(),
                         getKeyboard()));
             }
         } catch (TelegramApiException ex) {
