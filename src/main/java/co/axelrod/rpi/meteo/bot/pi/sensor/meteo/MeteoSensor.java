@@ -1,17 +1,25 @@
-package co.axelrod.rpi.meteo.bot.pi;
+package co.axelrod.rpi.meteo.bot.pi.sensor.meteo;
 
+import co.axelrod.rpi.meteo.bot.metrics.Prometheus;
+import co.axelrod.rpi.meteo.bot.pi.sensor.AbstractSensor;
 import com.pi4j.io.i2c.I2CBus;
 import com.pi4j.io.i2c.I2CDevice;
 import com.pi4j.io.i2c.I2CFactory;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
 @Component
-public class MeteoSensor {
+public class MeteoSensor extends AbstractSensor<MeteoData> {
     private I2CDevice device;
 
-    public MeteoSensor() throws IOException, I2CFactory.UnsupportedBusNumberException {
+    public MeteoSensor(Prometheus prometheus) throws Exception {
+        super(prometheus);
+    }
+
+    @Override
+    protected void registerSensor() throws Exception {
         // Create I2CBus
         I2CBus bus = I2CFactory.getInstance(I2CBus.BUS_1);
 
@@ -19,7 +27,8 @@ public class MeteoSensor {
         device = bus.getDevice(0x44);
     }
 
-    public String getTemperatureInCelsius() throws IOException, InterruptedException {
+    @Override
+    protected MeteoData getData() throws IOException, InterruptedException {
         // Send high repeatability measurement command
         // Command msb, command lsb
         byte[] config = new byte[2];
@@ -36,9 +45,18 @@ public class MeteoSensor {
 
         //Convert the data
         double cTemp = ((((data[0] & 0xFF) * 256) + (data[1] & 0xFF)) * 175.0) / 65535.0 - 45.0;
-        //double fTemp = ((((data[0] & 0xFF) * 256) + (data[1] & 0xFF)) * 315.0) / 65535.0 - 49.0;
         double humidity = ((((data[3] & 0xFF) * 256) + (data[4] & 0xFF)) * 100.0) / 65535.0;
 
-        return String.format("Температура: %.2f °C %n\nВлажность: %.2f%%RH %n\n", cTemp, humidity);
+        latestResult = new MeteoData(cTemp, humidity);
+
+        return latestResult;
+    }
+
+    @Override
+    @Scheduled(fixedRate = 5000, initialDelay = 8000)
+    protected void sendResultToPrometheus() throws IOException, InterruptedException {
+        MeteoData meteoData = getData();
+        prometheus.temperature.set(meteoData.getTemperature());
+        prometheus.humidity.set(meteoData.getHumidity());
     }
 }

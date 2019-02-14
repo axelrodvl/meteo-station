@@ -5,7 +5,7 @@
 
     <groupId>co.axelrod</groupId>
     <artifactId>raspberry-pi-meteo-bot</artifactId>
-    <version>0.2.0</version>
+    <version>0.3.0</version>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -15,6 +15,7 @@
 
     <properties>
         <java.version>1.8</java.version>
+        <prometheus.version>0.5.0</prometheus.version>
     </properties>
 
     <dependencies>
@@ -33,12 +34,31 @@
             <artifactId>telegrambots</artifactId>
             <version>3.5</version>
         </dependency>
-
         <dependency>
             <groupId>com.pi4j</groupId>
             <artifactId>pi4j-core</artifactId>
             <version>1.2-SNAPSHOT</version>
         </dependency>
+        <!-- Prometheus -->
+        <!-- The client -->
+        <dependency>
+            <groupId>io.prometheus</groupId>
+            <artifactId>simpleclient</artifactId>
+            <version>${prometheus.version}</version>
+        </dependency>
+        <!-- Exposition HTTPServer-->
+        <dependency>
+            <groupId>io.prometheus</groupId>
+            <artifactId>simpleclient_httpserver</artifactId>
+            <version>${prometheus.version}</version>
+        </dependency>
+        <!-- Pushgateway exposition-->
+        <dependency>
+            <groupId>io.prometheus</groupId>
+            <artifactId>simpleclient_pushgateway</artifactId>
+            <version>${prometheus.version}</version>
+        </dependency>
+
     </dependencies>
 
     <build>

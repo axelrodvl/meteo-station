@@ -1,15 +1,16 @@
-package co.axelrod.rpi.meteo.bot.pi;
+package co.axelrod.rpi.meteo.bot.pi.sensor.co2;
 
+import co.axelrod.rpi.meteo.bot.metrics.Prometheus;
+import co.axelrod.rpi.meteo.bot.pi.sensor.AbstractSensor;
 import com.pi4j.io.serial.*;
-import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
 @Component
-@Slf4j
-public class CO2Sensor {
-    private final Serial serial;
+public class CO2Sensor extends AbstractSensor<CO2Data> {
+    private Serial serial;
 
     private static final byte[] sensorCall = new byte[]{
             (byte) 0xff,
@@ -23,9 +24,12 @@ public class CO2Sensor {
             (byte) 0x79
     };
 
-    private int latestResult;
+    public CO2Sensor(Prometheus prometheus) throws Exception {
+        super(prometheus);
+    }
 
-    public CO2Sensor() throws IOException, InterruptedException {
+    @Override
+    protected void registerSensor() throws IOException, InterruptedException {
         serial = SerialFactory.createInstance();
 
         serial.addListener(new SerialDataEventListener() {
@@ -35,7 +39,7 @@ public class CO2Sensor {
                     if (event.length() >= 4 && (0xff & event.getBytes()[1]) == 0x86) {
                         int high = Integer.parseInt(event.getHexByteString().split(",")[2], 16);
                         int low = Integer.parseInt(event.getHexByteString().split(",")[3], 16);
-                        latestResult = high * 256 + low;
+                        latestResult = new CO2Data(high * 256 + low);
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -55,27 +59,18 @@ public class CO2Sensor {
         serial.open(config);
     }
 
-    public String getCO2() throws IOException, InterruptedException {
-        latestResult = 0;
+    @Override
+    protected CO2Data getData() throws IOException, InterruptedException {
         serial.write(sensorCall);
-        Thread.sleep(100);
-
-        return "CO₂: " + latestResult + " (" + interpretCO2Result(latestResult) + ")";
+        Thread.sleep(500);
+        return latestResult;
     }
 
-    private static String interpretCO2Result(int result) {
-        if (result < 800) {
-            return "нормально";
-        }
-
-        if(result < 1000) {
-            return "приемлемо";
-        }
-
-        if(result < 1400) {
-            return "необходимо проветрить";
-        }
-
-        return "срочно проветрить";
+    @Override
+    @Scheduled(fixedRate = 5000, initialDelay = 5000)
+    protected void sendResultToPrometheus() throws IOException, InterruptedException {
+        prometheus.co2.set(getData().getLevel());
     }
+
+
 }

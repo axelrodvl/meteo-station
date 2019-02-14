@@ -3,9 +3,6 @@ package co.axelrod.rpi.meteo.bot.util;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.replykeyboard.ReplyKeyboard;
 
-/**
- * Created by Vadim Axelrod (vadim@axelrod.co) on 04.03.2018.
- */
 public class TelegramUtil {
     private TelegramUtil() {
         // Utility class
