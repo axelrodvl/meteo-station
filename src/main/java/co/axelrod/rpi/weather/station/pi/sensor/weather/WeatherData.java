@@ -1,12 +1,12 @@
-package co.axelrod.rpi.meteo.bot.pi.sensor.meteo;
+package co.axelrod.rpi.weather.station.pi.sensor.weather;
 
-import co.axelrod.rpi.meteo.bot.pi.sensor.AbstractSensorData;
+import co.axelrod.rpi.weather.station.pi.sensor.AbstractSensorData;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public class MeteoData extends AbstractSensorData {
+public class WeatherData extends AbstractSensorData {
     private double temperature;
     private double humidity;
 

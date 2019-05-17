@@ -1,7 +1,9 @@
-package co.axelrod.rpi.meteo.bot.pi.sensor;
+package co.axelrod.rpi.weather.station.pi.sensor;
 
-import co.axelrod.rpi.meteo.bot.metrics.Prometheus;
+import co.axelrod.rpi.weather.station.metrics.Prometheus;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public abstract class AbstractSensor<T extends AbstractSensorData> {
     protected Prometheus prometheus;
 
@@ -10,6 +12,7 @@ public abstract class AbstractSensor<T extends AbstractSensorData> {
     public AbstractSensor(Prometheus prometheus) throws Exception {
         this.prometheus = prometheus;
         registerSensor();
+        log.info(this.getClass().getSimpleName() + " registered successfully");
     }
 
     protected abstract void registerSensor() throws Exception;
@@ -18,8 +21,10 @@ public abstract class AbstractSensor<T extends AbstractSensorData> {
 
     public String getResult() {
         try {
+            log.debug("Observing data for " + this.getClass().getSimpleName());
             return latestResult.toString();
         } catch (Exception ex) {
+            log.debug("Unable to get sensor data for " + this.getClass().getSimpleName());
             return "Unable to get sensor data";
         }
     }

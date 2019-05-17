@@ -1,8 +1,9 @@
-package co.axelrod.rpi.meteo.bot.config;
+package co.axelrod.rpi.weather.station.config;
 
-import co.axelrod.rpi.meteo.bot.ui.TelegramBot;
+import co.axelrod.rpi.weather.station.ui.TelegramBot;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.telegram.telegrambots.ApiContextInitializer;
 import org.telegram.telegrambots.TelegramBotsApi;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
@@ -10,6 +11,7 @@ import org.telegram.telegrambots.exceptions.TelegramApiException;
 import javax.annotation.PostConstruct;
 
 @Configuration
+@Profile("telegram")
 public class TelegramConfig {
     @Bean
     public TelegramBot telegramBot() {

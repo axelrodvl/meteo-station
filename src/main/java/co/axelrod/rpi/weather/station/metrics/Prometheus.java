@@ -1,4 +1,4 @@
-package co.axelrod.rpi.meteo.bot.metrics;
+package co.axelrod.rpi.weather.station.metrics;
 
 import io.prometheus.client.Gauge;
 import io.prometheus.client.exporter.HTTPServer;

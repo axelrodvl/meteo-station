@@ -1,11 +1,12 @@
-package co.axelrod.rpi.meteo.bot.ui;
+package co.axelrod.rpi.weather.station.ui;
 
-import co.axelrod.rpi.meteo.bot.pi.sensor.co2.CO2Sensor;
-import co.axelrod.rpi.meteo.bot.pi.sensor.meteo.MeteoSensor;
-import co.axelrod.rpi.meteo.bot.util.TelegramUtil;
+import co.axelrod.rpi.weather.station.pi.sensor.co2.CO2Sensor;
+import co.axelrod.rpi.weather.station.pi.sensor.weather.WeatherSensor;
+import co.axelrod.rpi.weather.station.util.TelegramUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Profile;
 import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.api.objects.replykeyboard.ReplyKeyboard;
 import org.telegram.telegrambots.api.objects.replykeyboard.ReplyKeyboardMarkup;
@@ -16,12 +17,13 @@ import org.telegram.telegrambots.exceptions.TelegramApiException;
 import java.util.Collections;
 
 @Slf4j
+@Profile("telegram")
 public class TelegramBot extends TelegramLongPollingBot {
     @Value("${telegram.bot.token}")
     private String telegramBotToken;
 
     @Autowired
-    private MeteoSensor meteoSensor;
+    private WeatherSensor weatherSensor;
 
     @Autowired
     private CO2Sensor co2Sensor;
@@ -42,7 +44,7 @@ public class TelegramBot extends TelegramLongPollingBot {
                 log.info("New request from Telegram bot with id: " + telegramChatId);
 
                 execute(TelegramUtil.prepareMessage(telegramChatId,
-                        meteoSensor.getResult() + co2Sensor.getResult(),
+                        weatherSensor.getResult() + co2Sensor.getResult(),
                         getKeyboard()));
             }
         } catch (TelegramApiException ex) {

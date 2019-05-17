@@ -1,14 +1,16 @@
-package co.axelrod.rpi.meteo.bot.pi.sensor.co2;
+package co.axelrod.rpi.weather.station.pi.sensor.co2;
 
-import co.axelrod.rpi.meteo.bot.metrics.Prometheus;
-import co.axelrod.rpi.meteo.bot.pi.sensor.AbstractSensor;
+import co.axelrod.rpi.weather.station.metrics.Prometheus;
+import co.axelrod.rpi.weather.station.pi.sensor.AbstractSensor;
 import com.pi4j.io.serial.*;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
 @Component
+@Slf4j
 public class CO2Sensor extends AbstractSensor<CO2Data> {
     private Serial serial;
 
@@ -63,6 +65,7 @@ public class CO2Sensor extends AbstractSensor<CO2Data> {
     protected CO2Data getData() throws IOException, InterruptedException {
         serial.write(sensorCall);
         Thread.sleep(500);
+        log.debug("Got data for CO2Sensor: " + latestResult);
         return latestResult;
     }
 
@@ -71,6 +74,4 @@ public class CO2Sensor extends AbstractSensor<CO2Data> {
     protected void sendResultToPrometheus() throws IOException, InterruptedException {
         prometheus.co2.set(getData().getLevel());
     }
-
-
 }

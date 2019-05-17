@@ -1,6 +1,6 @@
-package co.axelrod.rpi.meteo.bot.pi.sensor.co2;
+package co.axelrod.rpi.weather.station.pi.sensor.co2;
 
-import co.axelrod.rpi.meteo.bot.pi.sensor.AbstractSensorData;
+import co.axelrod.rpi.weather.station.pi.sensor.AbstractSensorData;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

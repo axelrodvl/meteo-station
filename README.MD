@@ -8,10 +8,10 @@ Supported sensors:
 
 ## Preparing bot
 - Create [Telegram bot](https://core.telegram.org/bots#creating-a-new-bot) and retrieve the token
-- Remove unused sensor component (if you need)
+- If you need Telegram bot, run application with flag 'weather-station.jar --spring.profiles.active=telegram'
 - Set Telegram bot token
     - at application.properties
-    - by passing as argument: 'java -jar build.jar --telegram.bot.token=YOUR_TOKEN'
+    - by passing as argument: 'weather-station.jar --telegram.bot.token=YOUR_TOKEN'
 
 ## Preparing Grafana and Prometheus
 - Download and unpack ARM version of [Grafana](https://grafana.com/grafana/download?platform=arm)

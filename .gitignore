@@ -5,5 +5,3 @@
 *.iws
 *.iml
 *.ipr
-
-src/main/java/co/axelrod/rpi/meteo/bot/config/token/TelegramTokenStorageImpl.java
