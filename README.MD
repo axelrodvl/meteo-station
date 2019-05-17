@@ -31,10 +31,10 @@ Demo (my own apartment's bot): http://telegram.me/i_am_at_home_bot
 - Build binary, copy it to Raspberry Pi and start
 ```
 mvn clean install
-scp target/raspberry-pi-meteo-bot-0.3.0.jar pi@address:~
-ssh pi@piaddress 'nohup java -jar raspberry-pi-meteo-bot-0.3.0.jar &> meteo-bot.out&'
+scp target/meteo-station-0.3.0.jar pi@address:~
+ssh pi@piaddress 'nohup java -jar meteo-station-0.3.0.jar &> meteo-bot.out&'
 or
-ssh pi@piaddress 'nohup java -jar raspberry-pi-meteo-bot-0.3.0.jar --telegram.bot.token=YOUR_TOKEN &> meteo-bot.out&'
+ssh pi@piaddress 'nohup java -jar meteo-station-0.3.0.jar --telegram.bot.token=YOUR_TOKEN &> meteo-bot.out&'
 ```
 
 ## Using
