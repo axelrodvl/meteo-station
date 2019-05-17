@@ -31,6 +31,10 @@ Supported sensors:
 ```
 mvn clean install
 scp target/weather-station.jar pi@address:/opt/weather-station
+scp resources/weather-station.service pi@address:/etc/systemd/system
+ssh pi@piaddress 'sudo systemctl daemon-reload'
+ssh pi@piaddress 'systemctl enable weather-station.service'
+ssh pi@piaddress 'systemctl start weather-station.service'
 ssh pi@piaddress '/opt/weather-station/weather-station.jar'
 or
 ssh pi@piaddress '/opt/weather-station/weather-station.jar --telegram.bot.token=YOUR_TOKEN'

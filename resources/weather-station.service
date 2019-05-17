@@ -1,0 +1,10 @@
+[Unit]
+Description=Weather Station
+
+[Service]
+User=pi
+ExecStart=/opt/weather-station/weather-station.jar
+SuccessExitStatus=143
+
+[Install]
+WantedBy=multi-user.target
