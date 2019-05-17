@@ -1,12 +1,10 @@
-# Telegram bot and Grafana dashboard for Raspberry Pi's sensors
+# Home weather station for Raspberry Pi's sensors with Telegram bot and Grafana dashboard 
 
-Observe your apartment's humidity, temperature and CO2 level with Raspberry Pi via Telegram bot and Grafana.
+Observe your apartment's humidity, temperature and CO2 level with Raspberry Pi via Telegram bot or Grafana.
 
 Supported sensors:
 - Humidity and temperature: `SHT3x-DIS`
 - CO2 level: `MH-Z19B NDIR`
-
-Demo (my own apartment's bot): http://telegram.me/i_am_at_home_bot
 
 ## Preparing bot
 - Create [Telegram bot](https://core.telegram.org/bots#creating-a-new-bot) and retrieve the token
@@ -28,13 +26,14 @@ Demo (my own apartment's bot): http://telegram.me/i_am_at_home_bot
 - [Install Pi4J](http://pi4j.com/install.html#Installation) on your Raspberry Pi
 - Connect `SHT3x-DIS` sensor to your Raspberry Pi
 - Connect `MH-Z19B NDIR` sensor to your Raspberry Pi
+- Launch Grafana and Prometheus on your Raspberry Pi
 - Build binary, copy it to Raspberry Pi and start
 ```
 mvn clean install
-scp target/meteo-station-0.3.0.jar pi@address:~
-ssh pi@piaddress 'nohup java -jar meteo-station-0.3.0.jar &> meteo-bot.out&'
+scp target/weather-station.jar pi@address:/opt/weather-station
+ssh pi@piaddress '/opt/weather-station/weather-station.jar'
 or
-ssh pi@piaddress 'nohup java -jar meteo-station-0.3.0.jar --telegram.bot.token=YOUR_TOKEN &> meteo-bot.out&'
+ssh pi@piaddress '/opt/weather-station/weather-station.jar --telegram.bot.token=YOUR_TOKEN'
 ```
 
 ## Using
